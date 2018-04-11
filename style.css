@@ -1,0 +1,22 @@
+body {
+    background-color: #242424;
+}
+
+h1 {
+    color: white;
+}
+
+.square {
+    width: 30%;
+    background-color: green;
+    padding-top: 30%;
+    margin: 1.66%;
+    flex-grow: 1;
+}
+
+#container {
+    display: flex;
+    flex-flow: row wrap;
+    max-width: 800px;
+    margin: 0 auto;
+}

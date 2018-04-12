@@ -1,16 +1,51 @@
 var colours = generateRandomColours(6);
 var pickedColour = pickColour();
+var easyMode = false;
 
 var squares = document.querySelectorAll(".square");
 var colourDisplay = document.querySelector("#colourDisplay");
 var infoDisplay = document.querySelector("#infoDisplay");
 var h1 = document.querySelector("h1");
 var resetButton = document.querySelector("#reset");
+var easyBtn = document.querySelector("#easyBtn");
+var hardBtn = document.querySelector("#hardBtn");
 
 colourDisplay.textContent = pickedColour;
 genSquares();
 
 resetButton.addEventListener("click", resetAll);
+
+easyBtn.addEventListener("click", function(){
+    easyMode = true;
+    this.classList.add("selected");
+    hardBtn.classList.remove("selected");
+    colours = generateRandomColours(3);
+    pickedColour = pickColour();
+    colourDisplay.textContent = pickedColour;
+    for (var i = 0; i < squares.length; i++){
+        if (colours[i]){
+            squares[i].style.backgroundColor = colours[i];
+        } else {
+            squares[i].style.display = "none";
+        }
+    }
+});
+
+hardBtn.addEventListener("click", function(){
+    easyMode = false;
+    this.classList.add("selected");
+    easyBtn.classList.remove("selected");
+    colours = generateRandomColours(6);
+    pickedColour = pickColour();
+    colourDisplay.textContent = pickedColour;
+    for (var i = 0; i < squares.length; i++){
+            squares[i].style.backgroundColor = colours[i];
+            squares[i].style.display = "block";
+    }
+});
+
+
+
 
 function genSquares(){
 // Iterate through squares.
@@ -67,11 +102,14 @@ function randomColour(){
 }
 
 function resetAll(){
-
     // Reset button text to default.
-    resetButton.textContent = "New colours";
+    resetButton.textContent = "New Colours";
     // Generate new colours.
-    colours = generateRandomColours(6);
+    if (easyMode) {
+        colours = generateRandomColours(3);
+    } else {
+        colours = generateRandomColours(6);
+    }
     // Generate new picked colour.
     pickedColour = pickColour();
     // Reset Colour Display.

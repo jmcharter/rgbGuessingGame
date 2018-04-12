@@ -6,10 +6,6 @@ h1 {
     color: white;
 }
 
-span {
-    color: white;
-}
-
 .square {
     width: 30%;
     background-color: green;
@@ -23,4 +19,11 @@ span {
     flex-flow: row wrap;
     max-width: 800px;
     margin: 0 auto;
+}
+
+#stripe {
+    background-color: white;
+    height: 30px;
+    text-align: center;
+    color: black;
 }

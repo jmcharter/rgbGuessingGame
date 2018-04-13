@@ -1,67 +1,73 @@
-var colours = generateRandomColours(6);
-var pickedColour = pickColour();
 var easyMode = false;
-
+var pickedColour;
+var colours = [];
 var squares = document.querySelectorAll(".square");
 var colourDisplay = document.querySelector("#colourDisplay");
 var infoDisplay = document.querySelector("#infoDisplay");
 var h1 = document.querySelector("h1");
 var resetButton = document.querySelector("#reset");
-var easyBtn = document.querySelector("#easyBtn");
-var hardBtn = document.querySelector("#hardBtn");
+var modeButtons = document.querySelectorAll(".mode");
 
-colourDisplay.textContent = pickedColour;
-genSquares();
+init();
 
-resetButton.addEventListener("click", resetAll);
-
-easyBtn.addEventListener("click", function(){
-    easyMode = true;
-    this.classList.add("selected");
-    hardBtn.classList.remove("selected");
-    colours = generateRandomColours(3);
-    pickedColour = pickColour();
-    colourDisplay.textContent = pickedColour;
-    for (var i = 0; i < squares.length; i++){
-        if (colours[i]){
-            squares[i].style.backgroundColor = colours[i];
-        } else {
-            squares[i].style.display = "none";
-        }
+function init(){
+    // Add logic to mode and reset buttons.
+    resetButton.addEventListener("click", resetAll);
+    for (var i = 0; i < modeButtons.length; i++){
+        modeButtons[i].addEventListener("click", function(){
+            modeButtons[0].classList.remove("selected");
+            modeButtons[1].classList.remove("selected");
+            this.classList.add("selected");
+            if (this.textContent === "Easy") {
+                easyMode = true;
+            } else {
+                easyMode = false;
+            }
+            resetAll();
+        });
     }
-});
+    resetAll();
+}
 
-hardBtn.addEventListener("click", function(){
-    easyMode = false;
-    this.classList.add("selected");
-    easyBtn.classList.remove("selected");
-    colours = generateRandomColours(6);
-    pickedColour = pickColour();
-    colourDisplay.textContent = pickedColour;
-    for (var i = 0; i < squares.length; i++){
-            squares[i].style.backgroundColor = colours[i];
-            squares[i].style.display = "block";
+function resetAll(){
+    // Reset button text to default.
+    resetButton.textContent = "New Colours";
+    // Generate new colours.
+    if (easyMode) {
+        colours = generateRandomColours(3);
+    } else {
+        colours = generateRandomColours(6);
     }
-});
-
-
-
+    // Generate new picked colour.
+    pickedColour = pickColour();
+    // Reset Colour Display.
+    colourDisplay.textContent = pickedColour;
+    // Reset H1.
+    h1.style.backgroundColor = null;
+    // Reset info display.
+    infoDisplay.textContent = "";
+    // Re-generate the squares.
+    genSquares();
+}
 
 function genSquares(){
-// Iterate through squares.
+    // Generate squares only for colours that exist, and add game logic to them.
     for (var i = 0; i < squares.length; i++){
-        // Add colours to to squares.
-        squares[i].style.backgroundColor = colours[i];
-        // Add click listeners to squares.
-        squares[i].addEventListener("click", isCorrect);
+        if (colours[i]) {
+            squares[i].style.display = "block";
+            squares[i].style.backgroundColor = colours[i];
+            squares[i].addEventListener("click", isCorrect);
+        } else{
+            squares[i].style.display = "none";
+        }
     }
 }
 
 function isCorrect(){
-// Check if collect colour was guessed and update info display.
+// Check if correct colour was guessed and update info display.
     var clickedColour = this.style.backgroundColor;
             // Check if correct square is clicked.
-            if(clickedColour === pickedColour.toLowerCase()){
+            if(clickedColour === pickedColour){
                 infoDisplay.textContent = "Correct!";
                 colourChange(pickedColour);
                 resetButton.textContent = "Play again?";
@@ -81,7 +87,7 @@ function colourChange(colour){
 
 function pickColour(){
     var randomnum = Math.floor(Math.random() * colours.length);
-    return colours[randomnum].toUpperCase();
+    return colours[randomnum];
 }
 
 function generateRandomColours(qty){
@@ -98,24 +104,5 @@ function randomColour(){
         var G = Math.floor(Math.random() * 256);
         var B = Math.floor(Math.random() * 256);
         // Concatenate into "RGB(0, 0, 0)".
-        return "RGB(" + R + ", " + G+ ", " + B + ")";
-}
-
-function resetAll(){
-    // Reset button text to default.
-    resetButton.textContent = "New Colours";
-    // Generate new colours.
-    if (easyMode) {
-        colours = generateRandomColours(3);
-    } else {
-        colours = generateRandomColours(6);
-    }
-    // Generate new picked colour.
-    pickedColour = pickColour();
-    // Reset Colour Display.
-    colourDisplay.textContent = pickedColour;
-    // Re-generate the squares.
-    genSquares();
-    // Reset H1.
-    h1.style.backgroundColor = null;
+        return "rgb(" + R + ", " + G+ ", " + B + ")";
 }

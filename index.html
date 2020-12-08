@@ -2,29 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>RGB Guessing Game</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Hex-guess</title>
 </head>
 <body>
-
-    <h1>The<br> <span id="colourDisplay">RGB</span> <br>Guessing Game</h1>
-    
-    <div id="stripe">
-        <button id="reset">New Colours</button>
-        <span id="infoDisplay"></span>
-        <button class="mode">Easy</button>
-        <button class="mode selected">Hard</button>
+    <header>
+        <div class="header-text">
+            <h2>Hex-guess - find this square: </h2>
+            <h1 class="colour_display"></h1>
+        </div>
+    </header>
+    <nav>
+        <div class="info-container">
+            <div class="info">
+                New Colours
+            </div>
+            <div class="win_message">
+            </div>
+            <div class="modes">
+                <div class="mode">Easy</div>
+                <div class="mode mode-highlight">Hard</div>
+            </div>
+        </div>
+    </nav>
+    <main>
+    <div class="square-container">
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
     </div>
-    
-    <div id="container">
-        <div class="square"></div>
-        <div class="square"></div>
-        <div class="square"></div>
-        <div class="square"></div>
-        <div class="square"></div>
-        <div class="square"></div>
-    </div>
+    </main>
 
-    <script type="text/javascript" src="scripts.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
